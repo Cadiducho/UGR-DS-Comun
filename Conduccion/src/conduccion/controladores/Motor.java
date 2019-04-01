@@ -55,6 +55,11 @@ public class Motor extends Observable implements Runnable {
         }
     }
 
+    public boolean getArrancado()
+    {
+        return arrancado;
+    }
+    
     @Override
     public void run() {
         

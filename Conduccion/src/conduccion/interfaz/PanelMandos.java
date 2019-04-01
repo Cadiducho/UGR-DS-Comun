@@ -28,8 +28,17 @@ public class PanelMandos extends JPanel implements Runnable {
         this.add(botonFrenar);
         
         this.botonArrancar.addActionListener((ActionEvent e) -> {
-            motor.arrancar();
-            botonAcelerar.setEnabled(true);
+            if (!motor.getArrancado()) {
+                motor.arrancar();
+                botonAcelerar.setEnabled(true);
+                botonArrancar.setText("Apagar");
+            }
+            else {
+                motor.arrancar();
+                botonAcelerar.setEnabled(false);
+                botonArrancar.setText("Encender");       
+            }
+           
         });
         
         this.setSize(500, 150);
