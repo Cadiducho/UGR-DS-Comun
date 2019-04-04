@@ -15,7 +15,10 @@ public class FrameInterfaz extends JFrame {
     public FrameInterfaz(Motor motor) {
         this.motor = motor;
         
-        PanelMandos mandos = new PanelMandos(motor);
+        PanelPedales pedales = new PanelPedales(motor);
+        new Thread(pedales).start();
+        
+        PanelMandos mandos = new PanelMandos(motor, pedales);
         new Thread(mandos).start();
         
         PanelCombustible gasolina = new PanelCombustible(motor);
@@ -35,6 +38,7 @@ public class FrameInterfaz extends JFrame {
         
         getContentPane().setLayout(new GridLayout(2, 1));
         getContentPane().add(panelGraficas);
+        getContentPane().add(pedales);
         getContentPane().add(mandos);
         this.setResizable(false);
         this.pack();
