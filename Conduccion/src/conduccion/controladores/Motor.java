@@ -8,10 +8,12 @@ public class Motor extends Observable implements Runnable {
     private int revolucionesAutomatico;
     private int litrosCombustible;
     private boolean arrancado;
+    private boolean mantener;
     private Modo modo;
 
     public Motor() {
         this.arrancado = false;
+        this.mantener = false;
         this.revoluciones = 0;
         this.revolucionesAutomatico = 0;
         this.litrosCombustible = 700;
@@ -40,31 +42,41 @@ public class Motor extends Observable implements Runnable {
         this.revoluciones -= 7;
     }
 
-    public void activarModoAutomatico() {
-        if(modo == Modo.MANUAL) {
-            this.modo = Modo.AUTOMATICO;
-            this.revolucionesAutomatico = this.revoluciones;
-            System.out.println("Motor automatico, rev: " + this.revoluciones);
-        }      
+    public void activarModoAutomatico() {  
+        this.mantener = false;
+        this.modo = Modo.AUTOMATICO;
+        System.out.println("Motor automatico, rev: " + this.revoluciones);
+
+    }
+    
+    public void mantenerModoAutomatico() {
+        this.mantener = true;
+        this.revolucionesAutomatico = this.revoluciones;
+        System.out.println("MANTENIENDO " + this.revoluciones);
+          
     }
     
     public void reactivarModoAutomatico() {
-        if(modo == Modo.MANUAL) {
-            this.modo = Modo.AUTOMATICO;
+        this.mantener = true;
+        this.modo = Modo.AUTOMATICO;
 
-            System.out.println("Motor automatico reiniciado, rev: " + this.revoluciones);
-            while(this.revoluciones < this.revolucionesAutomatico) {
-                acelerar();
-                System.out.println("Tengo " + getRevoluciones() + "RPM");
-            }
+        System.out.println("Motor automatico reiniciado, rev: " + this.revoluciones);
+        while(this.revoluciones < this.revolucionesAutomatico) {
+            acelerar();
+            System.out.println("Tengo " + getRevoluciones() + "RPM");
         }
+        System.out.println("REV: " + this.revoluciones + ", REVAUTO: " + this.revolucionesAutomatico);
+        while(this.revoluciones > this.revolucionesAutomatico) {
+            frenar();
+            System.out.println("Tengo " + getRevoluciones() + "RPM");
+        }
+        
     }
     
     public void apagarModoAutomatico() {
-        if(modo == Modo.AUTOMATICO) {
-            this.modo = Modo.MANUAL;
-            System.out.println("Motor automatico apagado, rev: " + this.revoluciones);
-        }     
+        this.mantener = false;
+        this.modo = Modo.MANUAL;
+        System.out.println("Motor automatico apagado, rev: " + this.revoluciones);
     }
     
     public int getRevoluciones() {
@@ -93,11 +105,11 @@ public class Motor extends Observable implements Runnable {
     }
         
     private void aplicarRozamiento() {
-        if (revoluciones >= 3) {
-            if (modo == Modo.AUTOMATICO)
-                revoluciones = revolucionesAutomatico;
-            
-            revoluciones -= 3;
+        if (this.revoluciones >= 3) {
+            if (mantener)
+                this.revoluciones = this.revolucionesAutomatico;
+            else
+                this.revoluciones -= 3;
         }
     }    
 
