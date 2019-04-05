@@ -38,7 +38,7 @@ public class PanelPedales extends JPanel implements Runnable {
     public boolean isPressedPedalAcelerar() {
         return this.pedalAcelerar.getModel().isPressed();
     }
-
+    
     @Override
     public void run() {
         while (true) {
@@ -54,7 +54,7 @@ public class PanelPedales extends JPanel implements Runnable {
                 motor.acelerar();
             }
             
-            if (this.pedalAcelerar.getModel().isPressed()) {
+            if (this.pedalFrenar.getModel().isPressed()) {
                 motor.frenar();
             }
         }
