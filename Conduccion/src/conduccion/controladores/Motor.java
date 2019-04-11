@@ -4,17 +4,26 @@ import conduccion.observer.Observable;
 
 public class Motor extends Observable implements Runnable {
     
+    private ControladorVelocidad controladorVelocidad = new ControladorVelocidad();
+    private ControladorDistancia controladorDistancia = new ControladorDistancia();
+    
     private int revoluciones;
+    private int velocidad;
+    private double distancia;
     private int revolucionesAutomatico;
     private int litrosCombustible;
+    
     private boolean arrancado;
     private boolean mantener;
     private Modo modo;
 
-    public Motor() {
+    public Motor(ControladorVelocidad controladorVelocidad, ControladorDistancia controladorDistancia) {
+        this.controladorVelocidad = controladorVelocidad;
         this.arrancado = false;
         this.mantener = false;
         this.revoluciones = 0;
+        this.velocidad = 0;
+        this.distancia = 0;
         this.revolucionesAutomatico = 0;
         this.litrosCombustible = 700;
         this.modo = Modo.MANUAL;
@@ -24,6 +33,8 @@ public class Motor extends Observable implements Runnable {
         if (!arrancado) {
             this.arrancado = true;
             this.revoluciones = 2000;
+            System.out.println("VELOCIDAD: " + controladorVelocidad.calcularVelocidad(this.revoluciones));
+            this.velocidad = controladorVelocidad.calcularVelocidad(this.revoluciones);
             System.out.println("Motor arrancado");
         } else {
             this.arrancado = false;
@@ -103,7 +114,19 @@ public class Motor extends Observable implements Runnable {
     public boolean getArrancado() {
         return arrancado;
     }
-        
+    
+    public int getVelocidad() {
+        return this.velocidad;
+    }
+    
+    public double getDistancia() {
+        return this.distancia;
+    }
+            
+     
+    public ControladorVelocidad getControladorVelocidad() {
+        return controladorVelocidad;
+    }
     private void aplicarRozamiento() {
         if (this.revoluciones >= 3) {
             if (mantener)
@@ -137,7 +160,8 @@ public class Motor extends Observable implements Runnable {
             if (arrancado) {
                 consumirGasolina();
             }
-            
+            this.velocidad = this.controladorVelocidad.calcularVelocidad(revoluciones);
+            this.distancia += this.controladorDistancia.calcularDistancia(this.velocidad);
             this.notificar();
         }
     }

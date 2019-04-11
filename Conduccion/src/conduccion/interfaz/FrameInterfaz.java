@@ -27,6 +27,8 @@ public class FrameInterfaz extends JFrame {
         motor.attach(revoluciones);
         PanelVelocimetro velocimetro = new PanelVelocimetro(motor);
         motor.attach(velocimetro);
+        PanelDistancia distancia = new PanelDistancia(motor);
+        motor.attach(distancia);
         
         setTitle("Vehiculo");
         
@@ -35,6 +37,7 @@ public class FrameInterfaz extends JFrame {
         panelGraficas.add(velocimetro);
         panelGraficas.add(gasolina);
         panelGraficas.add(revoluciones);
+        //panelGraficas.add(distancia);
         
         getContentPane().setLayout(new GridLayout(2, 1));
         getContentPane().add(panelGraficas);

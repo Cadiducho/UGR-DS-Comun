@@ -1,3 +1,4 @@
+
 package conduccion.interfaz;
 
 import conduccion.controladores.Motor;
@@ -7,11 +8,10 @@ import java.awt.Dimension;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
-public class PanelVelocimetro extends JPanel implements Observador {
-
+public class PanelDistancia extends JPanel implements Observador {
     private final Motor motor;
     
-    public PanelVelocimetro(Motor motor) {
+    public PanelDistancia(Motor motor) {
         this.motor = motor;
         
         this.setPreferredSize(new Dimension(300, 200));
@@ -20,7 +20,8 @@ public class PanelVelocimetro extends JPanel implements Observador {
 
     @Override
     public void actualizar() {
-        System.out.println("Tengo " + motor.getVelocidad() + "km/h");
+        System.out.println("Tengo ");
+                System.out.print(motor.getDistancia());
+                System.out.println("km");
     }
-    
 }
