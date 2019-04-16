@@ -20,8 +20,6 @@ public class PanelDistancia extends JPanel implements Observador {
 
     @Override
     public void actualizar() {
-        System.out.println("Tengo ");
-                System.out.print(motor.getDistancia());
-                System.out.println("km");
+        System.out.println("Tengo " + motor.getDistancia() + "km");
     }
 }

@@ -9,8 +9,7 @@ public class ControladorDistancia extends Controlador{
     }
     
     public double calcularDistancia(int velocidad) {
-        this.distancia += (velocidad/3600);
-        
+        this.distancia = (velocidad*0.25/3600);
         return this.distancia;
     }
 }

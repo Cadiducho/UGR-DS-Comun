@@ -19,6 +19,7 @@ public class Motor extends Observable implements Runnable {
 
     public Motor(ControladorVelocidad controladorVelocidad, ControladorDistancia controladorDistancia) {
         this.controladorVelocidad = controladorVelocidad;
+        this.controladorDistancia = controladorDistancia;
         this.arrancado = false;
         this.mantener = false;
         this.revoluciones = 0;
