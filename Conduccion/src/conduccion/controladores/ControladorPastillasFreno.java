@@ -12,10 +12,12 @@ public class ControladorPastillasFreno extends Controlador {
         rotacionesFreno = 0;
     }
     
-    public void monotorizar(int revoluciones) {
-        System.out.println("PASTILLAS: "+rotacionesFreno);
+    public String monotorizar(int revoluciones) {
+        String aviso = "";
         rotacionesFreno += revoluciones;
-       if(rotacionesFreno >= 5e8)
-            System.out.println("Aviso: Cambio de pastillas de freno");
+        
+        if(rotacionesFreno >= 5e8)
+            aviso = "Aviso: Cambio de pastillas de freno";
+        return aviso;
     }
 }

@@ -47,7 +47,6 @@ public class PanelMonotorizacion extends JPanel implements Runnable, ActionListe
     @Override
     public void run() {
         while (true) {
-            // Solo procesar el motor 4 veces por segundo
             try {
                 Thread.sleep(100);
             } catch (InterruptedException ex) {
@@ -62,7 +61,7 @@ public class PanelMonotorizacion extends JPanel implements Runnable, ActionListe
             else if (actualizarGeneral.getModel().isPressed())
                 motor.getControladorRevisionGeneral().actualizar();
             
-            if (this.motor.getVelocidad() > 0) {
+            if (this.motor.getVelocidad() > 0 || this.motor.getArrancado()) {
                 this.actualizarAceite.setEnabled(false);
                 this.actualizarFrenos.setEnabled(false);
                 this.actualizarGeneral.setEnabled(false);

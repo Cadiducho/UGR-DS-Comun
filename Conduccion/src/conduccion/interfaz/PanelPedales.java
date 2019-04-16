@@ -22,6 +22,7 @@ public class PanelPedales extends JPanel implements Runnable {
         this.pedalAcelerar = new JButton("Pedal acelerar");
         this.pedalAcelerar.setEnabled(false);
         this.pedalFrenar = new JButton("Pedal frenar");
+        this.pedalFrenar.setEnabled(false);
         
         this.add(pedalAcelerar);
         this.add(pedalFrenar);
@@ -35,8 +36,16 @@ public class PanelPedales extends JPanel implements Runnable {
         this.pedalAcelerar.setEnabled(estado);
     }
     
+    public void setPedalFrenar(boolean estado) {
+        this.pedalFrenar.setEnabled(estado);
+    }
+    
     public boolean isPressedPedalAcelerar() {
         return this.pedalAcelerar.getModel().isPressed();
+    }
+    
+    public boolean isPressedPedalFrenar() {
+        return this.pedalFrenar.getModel().isPressed();
     }
     
     @Override

@@ -21,6 +21,11 @@ public class Motor extends Observable implements Runnable {
     private boolean arrancado;
     private boolean mantener;
     private Modo modo;
+    
+    String avisoAceite;
+    String avisoFreno;
+    String avisoGeneral;
+    
 
     public Motor() {
         this.arrancado = false;
@@ -31,6 +36,9 @@ public class Motor extends Observable implements Runnable {
         this.litrosCombustible = controladorCombustible.getCombustible();
         this.revolucionesAutomatico = 0;
         this.modo = Modo.MANUAL;
+        avisoAceite = "";
+        avisoFreno = "";
+        avisoGeneral = "";
     }
     
     public void arrancar() {
@@ -143,6 +151,18 @@ public class Motor extends Observable implements Runnable {
         return controladorRevisionGeneral;
     }
     
+    public String getAvisoAceite() {
+        return avisoAceite;
+    }
+    
+    public String getAvisoFreno() {
+        return avisoFreno;
+    }
+    
+    public String getAvisoGeneral() {
+        return avisoGeneral;
+    }
+    
     private void aplicarRozamiento() {
         if (this.revoluciones >= 3) {
             if (mantener)
@@ -169,9 +189,9 @@ public class Motor extends Observable implements Runnable {
             
             if (arrancado) {
                 litrosCombustible = controladorCombustible.consumirGasolina(revoluciones);
-                controladorAceite.monotorizar(revoluciones);
-                controladorPastillasFreno.monotorizar(revoluciones);
-                controladorRevisionGeneral.monotorizar(revoluciones);   
+                avisoAceite = controladorAceite.monotorizar(revoluciones);
+                avisoFreno = controladorPastillasFreno.monotorizar(revoluciones);
+                avisoGeneral = controladorRevisionGeneral.monotorizar(revoluciones);   
             }
             this.velocidad = this.controladorVelocidad.calcularVelocidad(revoluciones);
             this.distancia += this.controladorDistancia.calcularDistancia(this.velocidad);

@@ -5,7 +5,6 @@ import conduccion.controladores.Motor;
 import java.awt.event.ActionEvent;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
-import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 
@@ -19,6 +18,7 @@ public class PanelMandos extends JPanel implements Runnable{
     private final JToggleButton botonReiniciar;
     private final JToggleButton botonApagarAutomatico;
     private final JToggleButton botonAcelerar;
+    private final ButtonGroup grupoBotones;
     
     public PanelMandos(Motor motor, PanelPedales pedales) {
         this.motor = motor;
@@ -37,7 +37,7 @@ public class PanelMandos extends JPanel implements Runnable{
         this.botonAcelerar.setEnabled(false);
         
         //Permite que no se puedan tener varias opciones a la vez
-        ButtonGroup grupoBotones= new ButtonGroup();
+        grupoBotones= new ButtonGroup();
 	grupoBotones.add(botonMantener);
 	grupoBotones.add(botonReiniciar);
         grupoBotones.add(botonApagarAutomatico);
@@ -53,12 +53,14 @@ public class PanelMandos extends JPanel implements Runnable{
             if (!motor.getArrancado()) {
                 motor.arrancar();
                 pedales.setPedalAcelerar(true);
+                pedales.setPedalFrenar(true);
                 botonArrancar.setText("Apagar");
             }
             else {
                 motor.arrancar();
                 pedales.setPedalAcelerar(false);
-                botonArrancar.setText("Encender");   
+                pedales.setPedalFrenar(false);
+                botonArrancar.setText("Arrancar");   
                 this.botonAcelerar.setEnabled(false);
                 this.botonApagarAutomatico.setEnabled(false);
                 this.botonMantener.setEnabled(false);
@@ -90,7 +92,17 @@ public class PanelMandos extends JPanel implements Runnable{
             }
             
             if (this.pedales.isPressedPedalAcelerar()) {
+                grupoBotones.clearSelection();
                 this.botonAcelerar.setEnabled(true);
+                this.botonApagarAutomatico.setEnabled(false);
+            }
+            
+            if (this.pedales.isPressedPedalFrenar()) {
+                if(this.motor.getModo() == Modo.AUTOMATICO) {
+                    this.botonApagarAutomatico.setSelected(true);
+                    this.motor.apagarModoAutomatico();
+                }
+                
             }
             
             if(this.botonAcelerar.isSelected()) {
@@ -109,6 +121,7 @@ public class PanelMandos extends JPanel implements Runnable{
             
             if(this.botonApagarAutomatico.isSelected()) {
                 this.botonMantener.setEnabled(false);
+                 this.botonAcelerar.setEnabled(false);
                 
             }
             

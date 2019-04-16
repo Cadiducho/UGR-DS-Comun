@@ -32,6 +32,12 @@ public class FrameInterfaz extends JFrame {
         motor.attach(velocimetro);
         PanelDistancia distancia = new PanelDistancia(motor);
         motor.attach(distancia);
+        PanelAvisoAceite avisoAceite = new PanelAvisoAceite(motor);
+        motor.attach(avisoAceite);
+        PanelAvisoFrenos avisoFrenos = new PanelAvisoFrenos(motor);
+        motor.attach(avisoFrenos);
+        PanelAvisoGeneral avisoGeneral = new PanelAvisoGeneral(motor);
+        motor.attach(avisoGeneral);
         
         setTitle("Vehiculo");
         

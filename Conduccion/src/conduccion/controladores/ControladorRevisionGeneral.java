@@ -13,9 +13,11 @@ public class ControladorRevisionGeneral {
         rotacionesGeneral = 0;
     }
     
-    public void monotorizar(int revoluciones) {
+    public String monotorizar(int revoluciones) {
+        String aviso = "";
         rotacionesGeneral += revoluciones;
-       if(rotacionesGeneral >= 5e9)
-            System.out.println("Aviso: Revision General");
+        if(rotacionesGeneral >= 5e9)
+            aviso = "Aviso: Revision General";
+        return aviso;
     }
 }

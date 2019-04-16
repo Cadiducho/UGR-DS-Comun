@@ -13,9 +13,11 @@ public class ControladorAceite extends Controlador {
         rotacionesAceite = 0;
     }
     
-    public void monotorizar(int revoluciones) {
+    public String monotorizar(int revoluciones) {
+        String aviso = "";
         rotacionesAceite += revoluciones;
        if(rotacionesAceite >= 5e6)
-            System.out.println("Aviso: Cambio de aceite");
+            aviso = "Aviso: Cambio de aceite";
+       return aviso;
     }
 }
