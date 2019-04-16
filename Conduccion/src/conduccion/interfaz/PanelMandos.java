@@ -74,8 +74,27 @@ public class PanelMandos extends JPanel implements Runnable{
             if (motor.getModo() == Modo.AUTOMATICO) {
                 motor.apagarModoAutomatico();
             }
+            this.botonMantener.setEnabled(false);
+            this.botonAcelerar.setEnabled(false);
         });
         
+        
+        this.botonAcelerar.addActionListener((ActionEvent e) -> {
+            this.botonMantener.setEnabled(true);
+            this.botonApagarAutomatico.setEnabled(true);
+               
+            motor.activarModoAutomatico();
+        });
+        
+        this.botonMantener.addActionListener((ActionEvent e) -> {
+            this.botonReiniciar.setEnabled(true);
+            motor.mantenerModoAutomatico();
+        });
+            
+        this.botonReiniciar.addActionListener((ActionEvent e) -> {
+            motor.reactivarModoAutomatico();
+        });
+               
         this.setSize(500, 150);
         this.setBorder(BorderFactory.createEmptyBorder(0,10,10,10)); 
     }
@@ -100,33 +119,15 @@ public class PanelMandos extends JPanel implements Runnable{
             if (this.pedales.isPressedPedalFrenar()) {
                 if(this.motor.getModo() == Modo.AUTOMATICO) {
                     this.botonApagarAutomatico.setSelected(true);
+                    this.botonMantener.setEnabled(false);
+                    this.botonAcelerar.setEnabled(false);
                     this.motor.apagarModoAutomatico();
                 }
                 
             }
             
-            if(this.botonAcelerar.isSelected()) {
-                this.botonMantener.setEnabled(true);
-                this.botonApagarAutomatico.setEnabled(true);
-               
-                motor.activarModoAutomatico();
+            if(this.botonAcelerar.isSelected())
                 motor.acelerar();
-
-            }
-            
-            if(this.botonMantener.isSelected()) {
-                this.botonReiniciar.setEnabled(true);
-                motor.mantenerModoAutomatico();
-            }
-            
-            if(this.botonApagarAutomatico.isSelected()) {
-                this.botonMantener.setEnabled(false);
-                 this.botonAcelerar.setEnabled(false);
-                
-            }
-            
-            if(this.botonReiniciar.isSelected())
-                motor.reactivarModoAutomatico();
-            }          
+        }
     }
 }
