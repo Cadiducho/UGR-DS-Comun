@@ -8,10 +8,8 @@ import conduccion.interfaz.FrameInterfaz;
 public class Main {
 
     public static void main(String[] args) {
-        ControladorVelocidad controladorVelocidad = new ControladorVelocidad();
-        ControladorDistancia controladorDistancia = new ControladorDistancia();
         
-        Motor motor = new Motor(controladorVelocidad, controladorDistancia);
+        Motor motor = new Motor();
         new Thread(motor).start();
         
         FrameInterfaz interfaz = new FrameInterfaz(motor);

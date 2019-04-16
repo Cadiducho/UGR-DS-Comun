@@ -6,27 +6,30 @@ public class Motor extends Observable implements Runnable {
     
     private ControladorVelocidad controladorVelocidad = new ControladorVelocidad();
     private ControladorDistancia controladorDistancia = new ControladorDistancia();
+    private ControladorCombustible controladorCombustible = new ControladorCombustible();
+    private ControladorAceite controladorAceite = new ControladorAceite();
+    private ControladorPastillasFreno controladorPastillasFreno = new ControladorPastillasFreno();
+    private ControladorRevisionGeneral controladorRevisionGeneral = new ControladorRevisionGeneral();
     
     private int revoluciones;
+    private int revolucionesAutomatico;
+    
     private int velocidad;
     private double distancia;
-    private int revolucionesAutomatico;
     private int litrosCombustible;
     
     private boolean arrancado;
     private boolean mantener;
     private Modo modo;
 
-    public Motor(ControladorVelocidad controladorVelocidad, ControladorDistancia controladorDistancia) {
-        this.controladorVelocidad = controladorVelocidad;
-        this.controladorDistancia = controladorDistancia;
+    public Motor() {
         this.arrancado = false;
         this.mantener = false;
         this.revoluciones = 0;
         this.velocidad = 0;
         this.distancia = 0;
+        this.litrosCombustible = controladorCombustible.getCombustible();
         this.revolucionesAutomatico = 0;
-        this.litrosCombustible = 700;
         this.modo = Modo.MANUAL;
     }
     
@@ -34,7 +37,7 @@ public class Motor extends Observable implements Runnable {
         if (!arrancado) {
             this.arrancado = true;
             this.revoluciones = 2000;
-            System.out.println("VELOCIDAD: " + controladorVelocidad.calcularVelocidad(this.revoluciones));
+            //OJO! mirar!
             this.velocidad = controladorVelocidad.calcularVelocidad(this.revoluciones);
             System.out.println("Motor arrancado");
         } else {
@@ -136,12 +139,6 @@ public class Motor extends Observable implements Runnable {
                 this.revoluciones -= 3;
         }
     }    
-
-    private void consumirGasolina() {
-        if (litrosCombustible > 0) {
-            litrosCombustible -= ((revoluciones) * 5e-11);
-        }
-    }
     
     @Override
     public void run() {
@@ -159,7 +156,11 @@ public class Motor extends Observable implements Runnable {
             aplicarRozamiento();
             
             if (arrancado) {
-                consumirGasolina();
+                litrosCombustible = controladorCombustible.consumirGasolina(revoluciones);
+                controladorAceite.monotorizar(revoluciones);
+                controladorPastillasFreno.monotorizar(revoluciones);
+                controladorRevisionGeneral.monotorizar(revoluciones);
+                
             }
             this.velocidad = this.controladorVelocidad.calcularVelocidad(revoluciones);
             this.distancia += this.controladorDistancia.calcularDistancia(this.velocidad);
