@@ -126,11 +126,23 @@ public class Motor extends Observable implements Runnable {
     public double getDistancia() {
         return this.distancia;
     }
-            
-     
+             
     public ControladorVelocidad getControladorVelocidad() {
         return controladorVelocidad;
     }
+    
+    public ControladorAceite getControladorAceite() {
+        return controladorAceite;
+    }
+    
+    public ControladorPastillasFreno getControladorPastillasFreno() {
+        return controladorPastillasFreno;
+    }
+    
+    public ControladorRevisionGeneral getControladorRevisionGeneral() {
+        return controladorRevisionGeneral;
+    }
+    
     private void aplicarRozamiento() {
         if (this.revoluciones >= 3) {
             if (mantener)
@@ -159,8 +171,7 @@ public class Motor extends Observable implements Runnable {
                 litrosCombustible = controladorCombustible.consumirGasolina(revoluciones);
                 controladorAceite.monotorizar(revoluciones);
                 controladorPastillasFreno.monotorizar(revoluciones);
-                controladorRevisionGeneral.monotorizar(revoluciones);
-                
+                controladorRevisionGeneral.monotorizar(revoluciones);   
             }
             this.velocidad = this.controladorVelocidad.calcularVelocidad(revoluciones);
             this.distancia += this.controladorDistancia.calcularDistancia(this.velocidad);

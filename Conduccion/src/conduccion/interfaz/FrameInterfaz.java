@@ -21,6 +21,9 @@ public class FrameInterfaz extends JFrame {
         PanelMandos mandos = new PanelMandos(motor, pedales);
         new Thread(mandos).start();
         
+        PanelMonotorizacion monotorizacion = new PanelMonotorizacion(motor);
+        new Thread(monotorizacion).start();
+        
         PanelCombustible gasolina = new PanelCombustible(motor);
         motor.attach(gasolina);
         PanelRevoluciones revoluciones = new PanelRevoluciones(motor);
@@ -43,6 +46,7 @@ public class FrameInterfaz extends JFrame {
         getContentPane().add(panelGraficas);
         getContentPane().add(pedales);
         getContentPane().add(mandos);
+        getContentPane().add(monotorizacion);
         this.setResizable(false);
         this.pack();
         

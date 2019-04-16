@@ -9,6 +9,10 @@ public class ControladorRevisionGeneral {
         rotacionesGeneral = 0;
     }
     
+    public void actualizar() {
+        rotacionesGeneral = 0;
+    }
+    
     public void monotorizar(int revoluciones) {
         rotacionesGeneral += revoluciones;
        if(rotacionesGeneral >= 5e9)

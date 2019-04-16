@@ -85,7 +85,7 @@ public class PanelMandos extends JPanel implements Runnable{
             try {
                 Thread.sleep(250);
             } catch (InterruptedException ex) {
-                System.err.println("Error procesando los pedales: ");
+                System.err.println("Error procesando los mandos: ");
                 System.err.println(ex.toString());
             }
             
