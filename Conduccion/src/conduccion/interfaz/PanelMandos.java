@@ -94,8 +94,7 @@ public class PanelMandos extends JPanel implements Runnable{
         this.botonReiniciar.addActionListener((ActionEvent e) -> {
             motor.reactivarModoAutomatico();
         });
-               
-        this.setSize(500, 150);
+
         this.setBorder(BorderFactory.createEmptyBorder(0,10,10,10)); 
     }
     

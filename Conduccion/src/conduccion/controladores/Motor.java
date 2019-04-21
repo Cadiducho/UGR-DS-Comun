@@ -4,12 +4,12 @@ import conduccion.observer.Observable;
 
 public class Motor extends Observable implements Runnable {
     
-    private ControladorVelocidad controladorVelocidad = new ControladorVelocidad();
-    private ControladorDistancia controladorDistancia = new ControladorDistancia();
-    private ControladorCombustible controladorCombustible = new ControladorCombustible();
-    private ControladorAceite controladorAceite = new ControladorAceite();
-    private ControladorPastillasFreno controladorPastillasFreno = new ControladorPastillasFreno();
-    private ControladorRevisionGeneral controladorRevisionGeneral = new ControladorRevisionGeneral();
+    private final ControladorVelocidad controladorVelocidad = new ControladorVelocidad();
+    private final ControladorDistancia controladorDistancia = new ControladorDistancia();
+    private final ControladorCombustible controladorCombustible = new ControladorCombustible();
+    private final ControladorAceite controladorAceite = new ControladorAceite();
+    private final ControladorPastillasFreno controladorPastillasFreno = new ControladorPastillasFreno();
+    private final ControladorRevisionGeneral controladorRevisionGeneral = new ControladorRevisionGeneral();
     
     private int revoluciones;
     private int revolucionesAutomatico;
@@ -22,9 +22,9 @@ public class Motor extends Observable implements Runnable {
     private boolean mantener;
     private Modo modo;
     
-    String avisoAceite;
-    String avisoFreno;
-    String avisoGeneral;
+    private String avisoAceite;
+    private String avisoFreno;
+    private String avisoGeneral;
     
 
     public Motor() {
@@ -36,9 +36,9 @@ public class Motor extends Observable implements Runnable {
         this.litrosCombustible = controladorCombustible.getCombustible();
         this.revolucionesAutomatico = 0;
         this.modo = Modo.MANUAL;
-        avisoAceite = "";
-        avisoFreno = "";
-        avisoGeneral = "";
+        this.avisoAceite = "";
+        this.avisoFreno = "";
+        this.avisoGeneral = "";
     }
     
     public void arrancar() {
@@ -127,6 +127,9 @@ public class Motor extends Observable implements Runnable {
         return arrancado;
     }
     
+    /**
+     * @return La velocidad en km/h
+     */
     public int getVelocidad() {
         return this.velocidad;
     }

@@ -1,12 +1,9 @@
 package conduccion.interfaz;
 
-import conduccion.controladores.Modo;
 import conduccion.controladores.Motor;
-import java.awt.event.ActionEvent;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.JToggleButton;
 
 public class PanelPedales extends JPanel implements Runnable {
     
@@ -27,9 +24,7 @@ public class PanelPedales extends JPanel implements Runnable {
         this.add(pedalAcelerar);
         this.add(pedalFrenar);
         
-        this.setSize(500, 150);
-        this.setBorder(BorderFactory.createEmptyBorder(0,10,10,10)); 
-        
+        this.setBorder(BorderFactory.createEmptyBorder(0,10,10,10));
     }
     
     public void setPedalAcelerar(boolean estado) {

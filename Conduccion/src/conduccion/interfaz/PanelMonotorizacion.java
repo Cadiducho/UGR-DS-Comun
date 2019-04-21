@@ -2,6 +2,7 @@
 package conduccion.interfaz;
 
 import conduccion.controladores.Motor;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
@@ -26,16 +27,13 @@ public class PanelMonotorizacion extends JPanel implements Runnable, ActionListe
         this.add(actualizarFrenos);
         this.add(actualizarGeneral);
        
-        this.setSize(500, 150);
         this.setBorder(BorderFactory.createEmptyBorder(0,10,10,10)); 
     }
     
     @Override
     public void actionPerformed(ActionEvent event) {
         //Se establece que al pulsar el boton se actualice la temperatura
-        if (event.getSource() == actualizarAceite)
-        {
-            System.out.println("Me has pulsado pero paso de ti porque me da la gana");
+        if (event.getSource() == actualizarAceite) {
            motor.getControladorAceite().actualizar();
         }
         else if (event.getSource() == actualizarFrenos)

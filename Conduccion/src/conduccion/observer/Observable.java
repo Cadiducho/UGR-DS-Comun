@@ -6,15 +6,15 @@ public abstract class Observable {
     
     private final ArrayList<Observador> observadores = new ArrayList<>();
     
-    public void attach(Observador observer) {
+    public synchronized void attach(Observador observer) {
         observadores.add(observer);
     }
     
-    public void detach(Observador observer) {
+    public synchronized void detach(Observador observer) {
         observadores.remove(observer);
     }
     
-    public void notificar() {
+    public synchronized void notificar() {
         observadores.forEach(Observador::actualizar);
     }
     

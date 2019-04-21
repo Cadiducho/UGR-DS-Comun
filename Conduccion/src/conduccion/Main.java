@@ -1,7 +1,5 @@
 package conduccion;
 
-import conduccion.controladores.ControladorDistancia;
-import conduccion.controladores.ControladorVelocidad;
 import conduccion.controladores.Motor;
 import conduccion.interfaz.FrameInterfaz;
 
