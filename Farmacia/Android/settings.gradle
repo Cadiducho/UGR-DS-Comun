@@ -1,2 +1,5 @@
 include ':app'
-rootProject.name='FarmaciaDS'
+rootProject.name='FarmaciaApp'
+
+include ":FarmaciaShared"
+project(":FarmaciaShared").projectDir = file("../FarmaciaShared")

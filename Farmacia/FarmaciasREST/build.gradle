@@ -15,7 +15,7 @@ repositories {
 
 dependencies {
     // Clases comunes entre el servidor REST y la APP de Android
-    implementation project(":../FarmaciaShared")
+    implementation project(":FarmaciaShared")
     
     // Web server
     implementation group: 'io.javalin', name: 'javalin', version: '2.8.0'

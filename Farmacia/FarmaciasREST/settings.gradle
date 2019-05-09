@@ -1,3 +1,4 @@
 rootProject.name = 'FarmaciasREST'
 
-include '../FarmaciaShared'
+include ":FarmaciaShared"
+project(":FarmaciaShared").projectDir = file("../FarmaciaShared")
