@@ -1,5 +1,7 @@
 package p3.farmacia.rest;
 
+import com.squareup.moshi.JsonAdapter;
+import com.squareup.moshi.Moshi;
 import com.squareup.moshi.Types;
 import io.javalin.Context;
 import io.javalin.Javalin;
@@ -7,6 +9,7 @@ import p3.farmacia.facade.UsuariosFacade;
 import p3.farmacia.modelo.ApiResponse;
 import p3.farmacia.modelo.Usuario;
 
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.List;
 
@@ -31,7 +34,25 @@ public class UsuariosController implements Controller {
     }
 
     private void login(Context ctx) {
+        UsuariosFacade uf = new UsuariosFacade();
+        JsonAdapter<Usuario> adapter = new Moshi.Builder().build().adapter(Usuario.class);
+        try {
+            Usuario usuario = adapter.fromJson(ctx.body());
+            if (usuario == null) {
+                ctx.result(ApiResponse.builder().success(false).message("Datos de usuario inválidos").build().toJson());
+                return;
+            }
 
+            Usuario loggedUser = uf.loginUsuario(usuario);
+            if (loggedUser != null) {
+                ctx.result(ApiResponse.builder().success(true).message("Login con éxito").result(loggedUser).build().toJson());
+            } else {
+                ctx.result(ApiResponse.builder().success(false).message("Fallo en el login").build().toJson());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            ctx.result(ApiResponse.builder().success(false).message("IOException").build().toJson());
+        }
     }
 
     private void getUser(Context ctx) {
@@ -63,14 +84,68 @@ public class UsuariosController implements Controller {
     }
 
     private void addUser(Context ctx) {
+        UsuariosFacade uf = new UsuariosFacade();
+        JsonAdapter<Usuario> adapter = new Moshi.Builder().build().adapter(Usuario.class);
+        try {
+            Usuario usuario = adapter.fromJson(ctx.body());
+            if (usuario == null) {
+                ctx.result(ApiResponse.builder().success(false).message("Datos de usuario inválidos").build().toJson());
+                return;
+            }
 
+            boolean ok = uf.newUsuario(usuario);
+            if (ok) {
+                ctx.result(ApiResponse.builder().success(true).message("Usuario creado").result(usuario).build().toJson());
+            } else {
+                ctx.result(ApiResponse.builder().success(false).message("Fallo en la base de datos").build().toJson());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            ctx.result(ApiResponse.builder().success(false).message("IOException").build().toJson());
+        }
     }
 
     private void updateUser(Context ctx) {
+        UsuariosFacade uf = new UsuariosFacade();
+        JsonAdapter<Usuario> adapter = new Moshi.Builder().build().adapter(Usuario.class);
+        try {
+            Usuario usuario = adapter.fromJson(ctx.body());
+            if (usuario == null) {
+                ctx.result(ApiResponse.builder().success(false).message("Datos de usuario inválidos").build().toJson());
+                return;
+            }
 
+            boolean ok = uf.updateUsuario(usuario);
+            if (ok) {
+                ctx.result(ApiResponse.builder().success(true).message("Usuario actualizado").result(usuario).build().toJson());
+            } else {
+                ctx.result(ApiResponse.builder().success(false).message("Fallo en la base de datos").build().toJson());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            ctx.result(ApiResponse.builder().success(false).message("IOException").build().toJson());
+        }
     }
 
     private void deleteUser(Context ctx) {
+        UsuariosFacade uf = new UsuariosFacade();
+        JsonAdapter<Usuario> adapter = new Moshi.Builder().build().adapter(Usuario.class);
+        try {
+            Usuario usuario = adapter.fromJson(ctx.body());
+            if (usuario == null) {
+                ctx.result(ApiResponse.builder().success(false).message("Datos de usuario inválidos").build().toJson());
+                return;
+            }
 
+            boolean ok = uf.deleteUsuario(usuario);
+            if (ok) {
+                ctx.result(ApiResponse.builder().success(true).message("Usuario eliminado").result(usuario).build().toJson());
+            } else {
+                ctx.result(ApiResponse.builder().success(false).message("Fallo en la base de datos").build().toJson());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            ctx.result(ApiResponse.builder().success(false).message("IOException").build().toJson());
+        }
     }
 }

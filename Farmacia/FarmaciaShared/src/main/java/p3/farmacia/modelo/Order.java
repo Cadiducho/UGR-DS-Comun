@@ -1,14 +1,11 @@
 package p3.farmacia.modelo;
 
-import java.util.List;
-
 /**
  * Modelo de datos para una orden de compra
  */
 public class Order {
 
     private int id;
-    private List<Producto> productos;
     private int fk_producto;
     private int cantidad;
     private float precio;
@@ -21,10 +18,6 @@ public class Order {
         this.precio = precio;
         this.farmacia = farmacia;
         this.usuario = usuario;
-    }
-
-    public void setProductos(List<Producto> productos) {
-        this.productos = productos;
     }
 
     public void setFk_producto(int fk_producto) {
@@ -49,10 +42,6 @@ public class Order {
 
     public int getId() {
         return id;
-    }
-
-    public List<Producto> getProductos() {
-        return productos;
     }
 
     public int getFk_producto() {

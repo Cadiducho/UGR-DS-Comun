@@ -1,5 +1,7 @@
 package p3.farmacia.rest;
 
+import com.squareup.moshi.JsonAdapter;
+import com.squareup.moshi.Moshi;
 import com.squareup.moshi.Types;
 import io.javalin.Context;
 import io.javalin.Javalin;
@@ -7,6 +9,7 @@ import p3.farmacia.facade.ProductoFacade;
 import p3.farmacia.modelo.ApiResponse;
 import p3.farmacia.modelo.Producto;
 
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.List;
 
@@ -58,15 +61,69 @@ public class ProductosController implements Controller {
     }
 
     private void addProducto(Context ctx) {
+        ProductoFacade pf = new ProductoFacade();
+        JsonAdapter<Producto> adapter = new Moshi.Builder().build().adapter(Producto.class);
+        try {
+            Producto producto = adapter.fromJson(ctx.body());
+            if (producto == null) {
+                ctx.result(ApiResponse.builder().success(false).message("Datos de producto inválidos").build().toJson());
+                return;
+            }
 
+            boolean ok = pf.newProducto(producto);
+            if (ok) {
+                ctx.result(ApiResponse.builder().success(true).message("Producto creada").result(producto).build().toJson());
+            } else {
+                ctx.result(ApiResponse.builder().success(false).message("Fallo en la base de datos").build().toJson());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            ctx.result(ApiResponse.builder().success(false).message("IOException").build().toJson());
+        }
     }
 
     private void updateProducto(Context ctx) {
+        ProductoFacade pf = new ProductoFacade();
+        JsonAdapter<Producto> adapter = new Moshi.Builder().build().adapter(Producto.class);
+        try {
+            Producto producto = adapter.fromJson(ctx.body());
+            if (producto == null) {
+                ctx.result(ApiResponse.builder().success(false).message("Datos de producto inválidos").build().toJson());
+                return;
+            }
 
+            boolean ok = pf.updateProducto(producto);
+            if (ok) {
+                ctx.result(ApiResponse.builder().success(true).message("Producto actualizado").result(producto).build().toJson());
+            } else {
+                ctx.result(ApiResponse.builder().success(false).message("Fallo en la base de datos").build().toJson());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            ctx.result(ApiResponse.builder().success(false).message("IOException").build().toJson());
+        }
     }
 
     private void deleteProducto(Context ctx) {
+        ProductoFacade pf = new ProductoFacade();
+        JsonAdapter<Producto> adapter = new Moshi.Builder().build().adapter(Producto.class);
+        try {
+            Producto producto = adapter.fromJson(ctx.body());
+            if (producto == null) {
+                ctx.result(ApiResponse.builder().success(false).message("Datos de producto inválidos").build().toJson());
+                return;
+            }
 
+            boolean ok = pf.deleteProducto(producto);
+            if (ok) {
+                ctx.result(ApiResponse.builder().success(true).message("Producto eliminado").build().toJson());
+            } else {
+                ctx.result(ApiResponse.builder().success(false).message("Fallo en la base de datos").build().toJson());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            ctx.result(ApiResponse.builder().success(false).message("IOException").build().toJson());
+        }
     }
 
 }

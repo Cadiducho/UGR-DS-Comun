@@ -78,11 +78,11 @@ public class UsuariosFacade {
     }
 
     public Usuario loginUsuario(Usuario u) {
-        String loginUser = "SELECT * FROM usuarios WHERE email=?";
+        String loginUser = "SELECT * FROM usuarios WHERE email=?;";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(loginUser);
             preparedStatement.setString(1, u.getEmail());
-            ResultSet rs = preparedStatement.executeQuery(loginUser);
+            ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()) {
                 System.out.println("Contraseña en la db:"+rs.getString("pass"));
                 System.out.println("Contraseña introducida:"+u.getPassword());

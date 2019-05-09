@@ -2,7 +2,6 @@ package p3.farmacia.facade;
 
 import p3.farmacia.Database;
 import p3.farmacia.modelo.Farmacia;
-import p3.farmacia.modelo.Producto;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

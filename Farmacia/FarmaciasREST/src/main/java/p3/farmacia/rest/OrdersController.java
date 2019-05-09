@@ -1,5 +1,7 @@
 package p3.farmacia.rest;
 
+import com.squareup.moshi.JsonAdapter;
+import com.squareup.moshi.Moshi;
 import com.squareup.moshi.Types;
 import io.javalin.Context;
 import io.javalin.Javalin;
@@ -7,6 +9,7 @@ import p3.farmacia.facade.OrderFacade;
 import p3.farmacia.modelo.ApiResponse;
 import p3.farmacia.modelo.Order;
 
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.List;
 
@@ -56,6 +59,24 @@ public class OrdersController implements Controller {
     }
 
     private void addOrder(Context ctx) {
+        OrderFacade of = new OrderFacade();
+        JsonAdapter<Order> adapter = new Moshi.Builder().build().adapter(Order.class);
+        try {
+            Order order = adapter.fromJson(ctx.body());
+            if (order == null) {
+                ctx.result(ApiResponse.builder().success(false).message("Datos de order inválidos").build().toJson());
+                return;
+            }
 
+            boolean ok = of.createOrder(order);
+            if (ok) {
+                ctx.result(ApiResponse.builder().success(true).message("Order creada").build().toJson());
+            } else {
+                ctx.result(ApiResponse.builder().success(false).message("Fallo en la base de datos").build().toJson());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            ctx.result(ApiResponse.builder().success(false).message("IOException").build().toJson());
+        }
     }
 }

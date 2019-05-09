@@ -28,15 +28,12 @@ public class OrderFacade {
         String insertarOrder = "INSERT INTO orders (fk_producto, precio, fk_farmacia, fk_usuario) VALUES (?,?,?,?)";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(insertarOrder);
-            for (Producto p : o.getProductos()) {
-                preparedStatement.setInt(1, p.getId());
-                preparedStatement.setFloat(2, p.getPrecio());
-                preparedStatement.setInt(3, o.getFarmacia());
-                preparedStatement.setInt(4, o.getUsuario());
+            preparedStatement.setInt(1, o.getFk_producto());
+            preparedStatement.setFloat(2, o.getPrecio());
+            preparedStatement.setInt(3, o.getFarmacia());
+            preparedStatement.setInt(4, o.getUsuario());
 
-                preparedStatement.addBatch();
-            }
-            preparedStatement.executeBatch();
+            preparedStatement.executeUpdate();
 
             this.connection.close();
             return true;
