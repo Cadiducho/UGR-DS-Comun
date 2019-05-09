@@ -1,0 +1,31 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group 'ugr'
+version '1.0-SNAPSHOT'
+mainClassName = "p3.farmacia.Main"
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Clases comunes entre el servidor REST y la APP de Android
+    implementation project(":../FarmaciaShared")
+    
+    // Web server
+    implementation group: 'io.javalin', name: 'javalin', version: '2.8.0'
+    implementation group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.26'
+    
+    // Json interpreter
+    implementation group: 'com.squareup.moshi', name: 'moshi', version: '1.8.0'
+    
+    // Mysql driver
+    implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.16'
+
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
