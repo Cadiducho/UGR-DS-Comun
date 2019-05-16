@@ -2,55 +2,64 @@ package com.ugr.farmaciads.ui;
 
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.ugr.farmaciads.R;
+import com.ugr.farmaciads.adapter.FarmaciasAdapter;
+import com.ugr.farmaciads.data.FarmaciasService;
+import com.ugr.farmaciads.data.RetrofitInstance;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.util.Log;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import p3.farmacia.modelo.Farmacia;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
+
+    private FarmaciasAdapter adapter;
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        FarmaciasService service = RetrofitInstance.getRetrofitInstance().create(FarmaciasService.class);
+
+        Call<List<Farmacia>> call = service.getFarmacias();
+
+        Log.wtf("URL Called", call.request().url() + "");
+
+        call.enqueue(new Callback<List<Farmacia>>() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onResponse(Call<List<Farmacia>> call, Response<List<Farmacia>> response) {
+                generateEmployeeList(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<List<Farmacia>> call, Throwable t) {
+                Toast.makeText(MainActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
+    private void generateEmployeeList(List<Farmacia> farmDataList) {
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view_farmacias_list);
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        adapter = new FarmaciasAdapter(farmDataList);
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
 
-        return super.onOptionsItemSelected(item);
+        recyclerView.setLayoutManager(layoutManager);
+
+        recyclerView.setAdapter(adapter);
     }
 }
