@@ -85,5 +85,6 @@ lint/generated/
 lint/outputs/
 lint/tmp/
 # lint/reports/
-Farmacia/FarmaciaShared/.project
-Farmacia/FarmaciasREST/.project
+*.project
+
+*.classpath
