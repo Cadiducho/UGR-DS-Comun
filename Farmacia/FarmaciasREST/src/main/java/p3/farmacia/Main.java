@@ -16,7 +16,9 @@ public class Main {
     private final Javalin app;
 
     private Main() {
-        app = Javalin.create().start(8080);
+        app = Javalin.create()
+        		.enableCorsForOrigin("*", "localhost", "127.0.0.1")
+        		.start(8080);
     }
 
     private void createRoutes() {
