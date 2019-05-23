@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">FarmaciaDS</string>
+    <string name="toolbar_title">Farmacias</string>
+    <string name="action_search">Buscar</string>
+    <string name="search_hint">Escribe el nombre…</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_usuario">Manuel</string>
+    <string name="nav_header_mail">android.studio@android.com</string>
+    <string name="nav_header_rol">Farmaceutico</string>
+    <string name="nav_header_desc">Navigation header</string>
+
+    <string name="menu_farmacias">Farmacias</string>
+    <string name="menu_mapa">Mapa</string>
+    <string name="menu_productos">Productos</string>
+    <string name="menu_carrito">Carrito</string>
+    <string name="menu_share">Share</string>
+    <string name="menu_logout">Log out</string>
 </resources>

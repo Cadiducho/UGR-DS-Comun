@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:paddingBottom="@dimen/row_padding"
+    android:paddingLeft="@dimen/activity_margin"
+    android:paddingRight="@dimen/activity_margin"
+    android:paddingTop="@dimen/row_padding">
+
+    <TextView
+        android:id="@+id/farmacia_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-medium"
+        android:textColor="@color/row_titulo"
+        android:textSize="@dimen/row_titulo" />
+
+    <TextView
+        android:id="@+id/farmacia_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/farmacia_name"
+        android:layout_marginEnd="0dp"
+        android:layout_toRightOf="@id/farmacia_name"
+        android:fontFamily="sans-serif-medium"
+        android:textColor="@color/row_titulo"
+        android:textSize="@dimen/row_titulo" />
+
+    <TextView
+        android:id="@+id/farmacia_latitud"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/farmacia_name"
+        android:fontFamily="sans-serif-medium"
+        android:textColor="@color/row_subtitulo"
+        android:textSize="@dimen/row_subtitulo" />
+
+    <TextView
+        android:id="@+id/farmacia_longitud"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/farmacia_name"
+        android:layout_toRightOf="@id/farmacia_latitud"
+        android:layout_marginLeft="8dp"
+        android:textColor="@color/row_subtitulo"
+        android:textSize="@dimen/row_subtitulo" />
+
+</RelativeLayout>
