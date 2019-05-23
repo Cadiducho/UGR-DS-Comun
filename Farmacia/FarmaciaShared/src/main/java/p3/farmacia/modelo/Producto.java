@@ -6,12 +6,12 @@ package p3.farmacia.modelo;
 public class Producto {
 
     private String nombre;
-    private int cantidad;
-    private float precio;
+    private Integer cantidad;
+    private Float precio;
     private String imagen;
-    private int id;
+    private Integer id;
 
-    public Producto(int id, String nombre, int cantidad, float precio, String imagen) {
+    public Producto(Integer id, String nombre, Integer cantidad, Float precio, String imagen) {
         this.id = id;
         this.nombre = nombre;
         this.cantidad = cantidad;
@@ -23,11 +23,11 @@ public class Producto {
         this.nombre = nombre;
     }
 
-    public void setCantidad(int cantidad) {
+    public void setCantidad(Integer cantidad) {
         this.cantidad = cantidad;
     }
 
-    public void setPrecio(float precio) {
+    public void setPrecio(Float precio) {
         this.precio = precio;
     }
 
@@ -39,11 +39,11 @@ public class Producto {
         return nombre;
     }
 
-    public int getCantidad() {
+    public Integer getCantidad() {
         return cantidad;
     }
 
-    public float getPrecio() {
+    public Float getPrecio() {
         return precio;
     }
 
@@ -51,7 +51,7 @@ public class Producto {
         return imagen;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 }

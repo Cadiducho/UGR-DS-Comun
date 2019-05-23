@@ -5,14 +5,14 @@ package p3.farmacia.modelo;
  */
 public class Order {
 
-    private int id;
-    private int fk_producto;
-    private int cantidad;
-    private float precio;
-    private int farmacia;
-    private int usuario;
+    private Integer id;
+    private Integer fk_producto;
+    private Integer cantidad;
+    private Float precio;
+    private Integer farmacia;
+    private Integer usuario;
 
-    public Order(int id, int fk_producto, float precio, int farmacia, int usuario) {
+    public Order(Integer id, Integer fk_producto, Float precio, Integer farmacia, Integer usuario) {
         this.id = id;
         this.fk_producto = fk_producto;
         this.precio = precio;
@@ -20,47 +20,47 @@ public class Order {
         this.usuario = usuario;
     }
 
-    public void setFk_producto(int fk_producto) {
+    public void setFk_producto(Integer fk_producto) {
         this.fk_producto = fk_producto;
     }
 
-    public void setCantidad(int cantidad) {
+    public void setCantidad(Integer cantidad) {
         this.cantidad = cantidad;
     }
 
-    public void setPrecio(float precio) {
+    public void setPrecio(Float precio) {
         this.precio = precio;
     }
 
-    public void setFarmacia(int farmacia) {
+    public void setFarmacia(Integer farmacia) {
         this.farmacia = farmacia;
     }
 
-    public void setUsuario(int usuario) {
+    public void setUsuario(Integer usuario) {
         this.usuario = usuario;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public int getFk_producto() {
+    public Integer getFk_producto() {
         return fk_producto;
     }
 
-    public int getCantidad() {
+    public Integer getCantidad() {
         return cantidad;
     }
 
-    public float getPrecio() {
+    public Float getPrecio() {
         return precio;
     }
 
-    public int getFarmacia() {
+    public Integer getFarmacia() {
         return farmacia;
     }
 
-    public int getUsuario() {
+    public Integer getUsuario() {
         return usuario;
     }
 }

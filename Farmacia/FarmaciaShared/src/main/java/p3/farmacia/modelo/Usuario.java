@@ -10,7 +10,7 @@ public class Usuario {
     private String rol;
     private String password;
     private String email;
-    private int id;
+    private Integer id;
 
     public Usuario() {
     }
@@ -35,7 +35,7 @@ public class Usuario {
         this.email = email;
     }
 
-    public Usuario(int id, String nombre, String nick, String rol, String password, String email) {
+    public Usuario(Integer id, String nombre, String nick, String rol, String password, String email) {
         this.nombre = nombre;
         this.nick = nick;
         this.rol = rol;
@@ -44,7 +44,7 @@ public class Usuario {
         this.id = id;
     }
 
-    public Usuario(int id, String nombre, String nick, String rol, String email) {
+    public Usuario(Integer id, String nombre, String nick, String rol, String email) {
         this.nombre = nombre;
         this.nick = nick;
         this.rol = rol;
@@ -92,7 +92,7 @@ public class Usuario {
         return email;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 }

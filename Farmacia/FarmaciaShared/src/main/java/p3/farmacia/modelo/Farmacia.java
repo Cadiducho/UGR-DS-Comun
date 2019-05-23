@@ -5,12 +5,12 @@ package p3.farmacia.modelo;
  */
 public class Farmacia {
 
-    private final int id;
+    private final Integer id;
     private String nombre;
-    private float latitud;
-    private float longitud;
+    private Float latitud;
+    private Float longitud;
 
-    public Farmacia(int id, String nombre, float latitud, float longitud) {
+    public Farmacia(Integer id, String nombre, Float latitud, Float longitud) {
         this.id = id;
         this.nombre = nombre;
         this.latitud = latitud;
@@ -21,15 +21,15 @@ public class Farmacia {
         this.nombre = nombre;
     }
 
-    public void setLatitud(float latitud) {
+    public void setLatitud(Float latitud) {
         this.latitud = latitud;
     }
 
-    public void setLongitud(float longitud) {
+    public void setLongitud(Float longitud) {
         this.longitud = longitud;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -37,11 +37,11 @@ public class Farmacia {
         return nombre;
     }
 
-    public float getLatitud() {
+    public Float getLatitud() {
         return latitud;
     }
 
-    public float getLongitud() {
+    public Float getLongitud() {
         return longitud;
     }
 }
