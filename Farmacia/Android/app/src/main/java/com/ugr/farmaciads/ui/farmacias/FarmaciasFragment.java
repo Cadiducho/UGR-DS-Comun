@@ -23,6 +23,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.squareup.moshi.Types;
 import com.ugr.farmaciads.R;
+import com.ugr.farmaciads.data.FarmaciasService;
 import com.ugr.farmaciads.data.RestConnector;
 import com.ugr.farmaciads.ui.MyDividerItemDecoration;
 
@@ -66,35 +67,15 @@ public class FarmaciasFragment extends Fragment implements FarmaciasAdapter.Farm
     }
 
     private void fetchFarmacias() {
-        RestConnector restConnector = new RestConnector();
-        Request request = new Request.Builder()
-                .url("http://10.0.2.2:8080/farmacias")
-                .build();
+        new FarmaciasService().getFarmacias(getContext(), (farmacias -> {
+            FarmaciasFragment.this.getActivity().runOnUiThread(() -> {
+                farmaciaList.clear();
+                farmaciaList.addAll(farmacias);
 
-        try {
-            restConnector.run(request,
-                    Types.newParameterizedType(List.class, Farmacia.class),
-                    (ApiResponse<List<Farmacia>> response) -> {
-
-                        if (response.getSuccess()) {
-                            List<Farmacia> farmacias = response.getResult();
-
-                            FarmaciasFragment.this.getActivity().runOnUiThread(() -> {
-                                farmaciaList.clear();
-                                farmaciaList.addAll(farmacias);
-
-                                mAdapter.notifyDataSetChanged();
-                                swipeRefreshLayout.setRefreshing(false);
-                            });
-                        } else {
-                            Toast.makeText(getContext(), "Error: No success", Toast.LENGTH_SHORT).show();
-                            Log.wtf("Farmacias", "No es success");
-                        }
-                    });
-        } catch (IOException e) {
-            e.printStackTrace();
-            Toast.makeText(getContext(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
+                mAdapter.notifyDataSetChanged();
+                swipeRefreshLayout.setRefreshing(false);
+            });
+        }));
     }
 
     @Override
