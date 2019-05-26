@@ -89,8 +89,8 @@ public class UsuariosFacade {
 
                 if (rs.getString("pass").compareTo(u.getPassword())==0) {
                     System.out.println("Login correcto");
-                    return new Usuario(rs.getInt("id"), rs.getString("nombre"), rs.getString("nick"),
-                            rs.getString("pass"), rs.getString("rol"), rs.getString("email"));
+                    return new Usuario(rs.getInt("id"), rs.getString("nombre"),
+                            rs.getString("nick"),rs.getString("rol"), rs.getString("email"));
                 } else {
                     this.connection.close();
                     return null;
