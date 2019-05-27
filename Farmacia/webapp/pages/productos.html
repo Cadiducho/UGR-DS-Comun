@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Farmacias</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="../vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Morris Charts CSS -->
+    <link href="../vendor/morrisjs/morris.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">Farmacias</a>
+            </div>
+            <!-- /.navbar-header -->
+
+
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+
+                        <li>
+                            <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Inicio</a>
+                        </li>
+                        <li>
+                            <a href="productos.html"><i class="fa fa-bar-chart-o fa-fw"></i> Productos</span></a>
+
+                        </li>
+                        <li>
+                            <a href="farmacias.html"><i class="fa fa-table fa-fw"></i> Farmacias</a>
+                        </li>
+                        <li>
+                            <a href="usuarios.html"><i class="fa fa-table fa-fw"></i> Usuarios</a>
+                        </li>
+                        <!--<li>
+                            <a href="orders.html"><i class="fa fa-table fa-fw"></i> Orders</a>
+                        </li>-->
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
+
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Productos</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <button type="button" id="crear" class="btn btn-primary">Crear producto</button>
+            <div id="hiddenForm" >
+            <div class="form-group">
+            	<label>Nombre</label>
+            	<input id="nombre" class="form-control" placeholder="Nombre del producto">
+
+            	<label>Cantidad</label>
+            	<input id="cantidad" class="form-control" placeholder="Cantidad">
+
+            	<label>Precio</label>
+            	<input id="precio" class="form-control" placeholder="Precio">
+            	<button type="button" id="add" class="btn btn-success">Añadir producto</button>
+            </div>
+
+            </div>
+
+            <br/><br/><br/>
+            <input type="text" id="inputBuscarProductos" onkeyup="buscarProductos()" class="form-control" placeholder="Busca productos">
+
+            <div id="productos">
+
+			      </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Modificar Producto</h4>
+                  </div>
+                  <div class="modal-body">
+
+                      <input type="hidden" id="id-modificar">
+
+                      <label for="nombre"><b>Nombre</b></label><br/>
+                      <input type="text" id="nombre-modificar" class="form-control" placeholder="Introduzca nombre" name="nombre" required><br/><br/>
+
+                      <label for="cantidad"><b>Cantidad</b></label><br/>
+                      <input type="text" id="cantidad-modificar" class="form-control" placeholder="Introduzca cantida" name="cantidad" required><br/><br/>
+
+                      <label for="precio"><b>Precio</b></label><br/>
+                      <input type="text" id="precio-modificar" class="form-control" placeholder="Introduzca precio" name="precio" required><br/><br/>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Salir</button>
+                    <button type="button" class="btn btn-primary" onclick="modificar()">Guardar cambios</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+     <script type = "text/javascript"
+         src = "../vendor/jquery/jquery.min.js"></script>
+    <script src="../js/jquery.md5.js"></script>
+
+
+
+
+
+    <script>
+
+    $( "#crear" ).click(function() {
+    	  $( "#hiddenForm" ).toggle( "slow", function() {
+    	  });
+    });
+
+
+    function eliminar(id){
+
+	  item = {
+			   id: id
+			   }
+         if(localStorage.getItem("rol") === "Farmaceutico") {
+  		    $.ajax({
+  		    	  url: "http://localhost:8080/productos",
+  		    	  type: "DELETE",
+  		    	  contentType: "application/json;charset=utf-8",
+  		          dataType: 'json',
+  		    	  data: JSON.stringify(item),
+  		    	  success: function( result ) {
+  		    	    alert("ELIMINADO CORRECTAMENTE");
+  		    	    window.location.reload();
+  		    	  },
+  		    	  error: function( result ){
+  		    		  alert("ELIMINADO INCORRECTO");
+  		    	  }
+		    	     });
+          }
+          else {
+            alert("NO TIENES PERMISO");
+          }
+
+    }
+
+    function mostrarModal(id) {
+          $("#id-modificar").val(id);
+          $('#myModal').modal('show');
+    }
+
+    function modificar() {
+      var id = $("#id-modificar").val();
+      var nombre = $("#nombre-modificar").val();
+      var cantidad = $("#cantidad-modificar").val();
+      var precio = $("#precio-modificar").val();
+
+      console.log(id);
+      console.log(nombre);
+      console.log(precio);
+      console.log(cantidad);
+
+      var producto = {
+         id: parseInt(id),
+         nombre: nombre,
+         cantidad: parseInt(cantidad),
+         precio: parseInt(precio)
+         }
+
+         if(localStorage.getItem("rol") === "Farmaceutico") {
+  		    $.ajax({
+  		    	  url: "http://localhost:8080/productos",
+  		    	  type: "PATCH",
+  		    	  contentType: "application/json",
+  		          dataType: 'json',
+  		    	  data: JSON.stringify(producto),
+  		    	  success: function( result ) {
+  		    	    alert("MODIFICADO CORRECTAMENTE");
+  		    	    window.location.reload();
+  		    	  },
+  		    	  error: function( result ){
+  		    		  alert("MODIFICADO INCORRECTO");
+  		    	  }
+		    	     });
+          }
+          else {
+            alert("NO TIENES PERMISO");
+          }
+
+    }
+$(document).ready(function(){
+
+    	$("#add").click(function(){
+		  	var id = $("#id").val();
+    		var nombre = $("#nombre").val();
+			var cantidad = $("#cantidad").val();
+			var precio = $("#precio").val();
+
+	  producto = {
+			   nombre: nombre,
+			   cantidad: cantidad,
+			   precio: precio
+			   }
+         if(localStorage.getItem("rol") === "Farmaceutico") {
+		    $.ajax({
+		    	  url: "http://localhost:8080/productos",
+		    	  type: "PUT",
+		    	  contentType: "application/json",
+		          dataType: 'json',
+		    	  data: JSON.stringify(producto),
+		    	  success: function( result ) {
+		    	    alert("INTRODUCIDO CORRECTAMENTE");
+		    	    window.location.reload();
+		    	  },
+		    	  error: function( result ){
+		    		  alert("NO SE HA PODIDO INTRODUCIR");
+		    	  }
+		    	});
+        }
+        else {
+          alert("NO TIENES PERMISO");
+        }
+	    	});
+
+
+    	$( "#hiddenForm" ).hide( "slow", function() {
+	  });
+
+
+	    $.ajax({
+	    	  url: "http://localhost:8080/productos/",
+	    	  type: "GET",
+          mode: 'cors',
+	        dataType: 'json',
+	    	  success: function( respuesta ) {
+  	    	    //console.log(respuesta);
+              //console.log("String: " + JSON.stringify(respuesta));
+              if (respuesta.success) {
+                let productos = respuesta.result;
+                //console.log(productos);
+
+                let table = "<table class='table' id='tablaProductos'>"+
+        			  	"<thead>"+
+        			    "<tr>"+
+        			      "<th scope='col'>#</th>"+
+        			      "<th scope='col'>Nombre</th>"+
+        			      "<th scope='col'>Cantidad</th>"+
+        			      "<th scope='col'>Precio</th>"+
+        			      "<th scope='col'>Eliminar</th>"+
+                    "<th scope='col'>Modificar</th>"+
+        			    "</tr>"+
+        			  "</thead>"+
+        			  "<tbody>";
+
+                for (let i in productos) {
+                  //console.log("Iterando " + productos[i]);
+                  table+="<tr>"+
+        			      "<th scope='row'>"+productos[i].id+"</th>"+
+        			      "<td>"+productos[i].nombre+"</td>"+
+        			      "<td>"+productos[i].cantidad+"</td>"+
+        			      "<td>"+productos[i].precio+"</td>"+
+        			      "<td><button type='button'  onclick='eliminar("+productos[i].id+")' class='btn btn-danger'>Eliminar producto</button></td>"+
+                    "<td><button type='button'  onclick='mostrarModal("+productos[i].id+")' class='btn btn-warning'>Modificar producto</button></td>"+
+        			    "</tr>";
+                }
+
+                table+=" </tbody>"+
+         			     "</table>";
+
+                document.getElementById("productos").innerHTML =table;
+              } else {
+                console.log("No success");
+                document.getElementById("productos").innerHTML = "Datos no recibidos";
+              }
+	    	  },
+	    	  error: function( result ){
+	    	  }
+	    	});
+    });
+
+    function buscarProductos() {
+        let input = document.getElementById("inputBuscarProductos");
+        let filter = input.value.toUpperCase();
+        let table = document.getElementById("tablaProductos");
+        let tr = table.getElementsByTagName("tr");
+        let nombre, id;
+        for (i = 0; i < tr.length; i++) {
+            id = tr[i].getElementsByTagName("td")[0];
+            nombre = tr[i].getElementsByTagName("td")[1];
+
+            if (id || nombre) {
+                idValue = id.textContent || id.innerText;
+                nombreValue = nombre.textContent || nombre.innerText;
+                if ((idValue.toUpperCase().indexOf(filter) > -1)
+                      || (nombreValue.toUpperCase().indexOf(filter) > -1)) {
+
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+    </script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="../vendor/metisMenu/metisMenu.min.js"></script>
+
+    <!-- Morris Charts JavaScript -->
+    <script src="../vendor/raphael/raphael.min.js"></script>
+    <script src="../vendor/morrisjs/morris.min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="../dist/js/sb-admin-2.js"></script>
+
+</body>
+
+</html>
