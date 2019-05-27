@@ -5,6 +5,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.squareup.moshi.Types;
+import com.ugr.farmaciads.MainActivity;
 import com.ugr.farmaciads.ui.mapa.MapaFragment;
 
 import java.io.IOException;
@@ -24,7 +25,7 @@ public class FarmaciasService {
     public void getFarmacias(Context context, FarmaciasCallback callback) {
         RestConnector restConnector = new RestConnector();
         Request request = new Request.Builder()
-                .url("http://10.0.2.2:8080/farmacias")
+                .url(MainActivity.HOST + "/farmacias")
                 .build();
 
         final List<Farmacia> farmacias = new ArrayList<>();

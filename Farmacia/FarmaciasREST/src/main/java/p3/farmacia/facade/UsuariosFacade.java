@@ -44,12 +44,14 @@ public class UsuariosFacade {
         return false;
     }
     public boolean updateUsuario(Usuario u) {
-        String updateUser = "UPDATE usuarios SET nombre=?, nick=? WHERE email=?";
+        String updateUser = "UPDATE usuarios SET nombre=?, nick=?, rol=?, email=? WHERE id=?";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(updateUser);
             preparedStatement.setString(1, u.getNombre());
             preparedStatement.setString(2, u.getNick());
-            preparedStatement.setString(3, u.getEmail());
+            preparedStatement.setString(3, u.getRol());
+            preparedStatement.setString(4, u.getEmail());
+            preparedStatement.setInt(5, u.getId());
             preparedStatement.execute();
 
             this.connection.close();

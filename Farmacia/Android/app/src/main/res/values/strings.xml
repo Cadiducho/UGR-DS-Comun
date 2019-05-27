@@ -1,4 +1,5 @@
 <resources>
+    <string name="host">http://10.0.2.2:8080</string>
     <string name="app_name">FarmaciaDS</string>
     <string name="toolbar_title">Farmacias</string>
     <string name="action_search">Buscar</string>
@@ -16,4 +17,16 @@
     <string name="menu_carrito">Carrito</string>
     <string name="menu_share">Share</string>
     <string name="menu_logout">Log out</string>
+    <string name="title_activity_login">Iniciar sesión</string>
+    <string name="title_activity_register">Registrarse</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_nombre">Nombre</string>
+    <string name="prompt_nick">Nick</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Inicia sesión</string>
+    <string name="action_sign_in_short">Login</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="no_cuenta">¿No tienes cuenta? Regístrate</string>
+    <string name="ya_cuenta">Ya tengo cuenta</string>
+    <string name="action_sign_up">Registrarse</string>
 </resources>
